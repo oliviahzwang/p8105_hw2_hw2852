@@ -1,0 +1,16 @@
+---
+title: "P8105 Data Science I Homework 2"
+author: Olivia Wang (hw2852)
+output: github_document
+date: "2022-10-05"
+---
+
+# Problem 1 
+
+We will first read and clean the CSV data set containing the NYC Transit data. To do so, we will first load in the `tidyverse` package that contains the necessary functions. 
+```{r}
+library(tidyverse)
+transit_data = read_csv(file = "./NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
+transit_data = janitor::clean_names(transit_data)
+```
+
