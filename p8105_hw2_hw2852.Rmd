@@ -42,4 +42,8 @@ nrow(transit_data)
 ncol(transit_data)
 ```
 
-The newly created `transit_data` data set contains __1868 rows__ and __19 columns__. So far we have:
+The newly created `transit_data` data set contains __1868 rows__ and __19 columns__.So far, we have loaded in the CSV data set containing NYC Transit data. We then applied the `clean_names` function to clean up variable names. The `select` function was applied to retain the prescribed 19 variables. The `entry` variable was then converted from a character variable (YES vs. NO) to a logical variable (TRUE vs. FALSE). This tidied data set can now be used for further analysis. 
+
+
+
+
