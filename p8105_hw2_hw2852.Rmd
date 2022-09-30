@@ -45,5 +45,13 @@ ncol(transit_data)
 The newly created `transit_data` data set contains __1868 rows__ and __19 columns__.So far, we have loaded in the CSV data set containing NYC Transit data. We then applied the `clean_names` function to clean up variable names. The `select` function was applied to retain the prescribed 19 variables. The `entry` variable was then converted from a character variable (YES vs. NO) to a logical variable (TRUE vs. FALSE). This tidied data set can now be used for further analysis. 
 
 
+## 1.2 Enumerating Distinct Stations
 
+To determine the number of distinct stations, the `distinct` function can be applied. To do so, we must first load in the `dplyr` package that contains the function. 
+```{r}
+library(dplyr)
+distinct(transit_data, line, station_name, .keep_all = TRUE)
+```
+
+Based on the output generated from the code above, we can conclude that there are __465__ distinct stations. 
 
