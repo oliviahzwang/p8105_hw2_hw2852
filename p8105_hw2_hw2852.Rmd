@@ -7,7 +7,9 @@ date: "2022-10-05"
 
 # Problem 1 
 
-We will first read and clean the CSV data set containing the NYC Transit data. To do so, we will first load in the `tidyverse` package that contains the necessary functions. We will also retain the following columns using the `select` function: 
+## 1.1 Read, Clean, Select, Mutate Transit Data
+
+We will first read and clean the CSV data set containing the NYC Transit data. To do so, we will first load in the `tidyverse` package that contains the necessary functions. We will also retain the following columns (i.e., variables) using the `select` function: 
 
 * Line
 * Station
@@ -26,5 +28,18 @@ transit_data =
   read_csv("./NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
   janitor::clean_names(.) %>% 
   select(., line, station_name, station_latitude, station_longitude, starts_with("route"), entry, vending, entrance_type, ada)
-  
 ```
+
+Next, we will convert the `entry` variable from a character (YES vs. NO) to a logical variable using the `ifelse` function. 
+```{r}
+transit_data = mutate(transit_data, entry = ifelse(entry == "YES", TRUE, FALSE))
+```
+
+Let us now generate a summary of the `transit_data` data set, and determine the number of rows and columns in this data set. 
+```{r}
+summary(transit_data)
+nrow(transit_data)
+ncol(transit_data)
+```
+
+The newly created `transit_data` data set contains __1868 rows__ and __19 columns__. So far we have:
