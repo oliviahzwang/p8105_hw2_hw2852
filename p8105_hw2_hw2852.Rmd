@@ -60,9 +60,20 @@ Based on the output generated from the code above, we can conclude that there ar
 To determine the number of stations that are ADA compliant, we can apply the `count` function to, as the name suggests, count the number of entries for the `ada` variable are "TRUE". 
 
 ```{r}
-dplyr::count(transit_data, ada)
+count(transit_data, ada)
 ```
 
 Based on the output generated from the code above, we can conclude that there are __468__ ADA-compliant stations. 
 
-## 1.4 
+## 1.4 Proportion of Station Entrances & Exits Without Vending Allow Entry
+
+To determine the proportion of station entrances and exits without vending that allow entry, we can create the following two variables: `no_vending_total`, representing the total number of station entrances and exits that do not have vending; and `no_vending_yes_entry`, representing the total number of station entrances and exits that do not have vending, but also allow entry. We can then divide the value of `no_vending_yes_entry` by that of `no_vending_total` to get a final proportion. 
+
+```{r, include= TRUE}
+no_vending_total = nrow(transit_data[transit_data$vending == 'NO', ])
+no_vending_yes_entry = nrow(transit_data[which(transit_data$vending == 'NO' & transit_data$entry == TRUE), ])
+no_vending_yes_entry / no_vending_total
+
+```
+Based on the output generated from the code above, we can conclude that about __37.7%__ of station entrances and exists without vending allow entry. 
+
