@@ -7,10 +7,24 @@ date: "2022-10-05"
 
 # Problem 1 
 
-We will first read and clean the CSV data set containing the NYC Transit data. To do so, we will first load in the `tidyverse` package that contains the necessary functions. 
+We will first read and clean the CSV data set containing the NYC Transit data. To do so, we will first load in the `tidyverse` package that contains the necessary functions. We will also retain the following columns using the `select` function: 
+
+* Line
+* Station
+* Name
+* Station Latitude
+* Station Longitude
+* Routes Served
+* Entry
+* Vending
+* Entrance Type
+* ADA Compliance
+
 ```{r}
 library(tidyverse)
-transit_data = read_csv(file = "./NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
-transit_data = janitor::clean_names(transit_data)
+transit_data = 
+  read_csv("./NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
+  janitor::clean_names(.) %>% 
+  select(., line, station_name, station_latitude, station_longitude, starts_with("route"), entry, vending, entrance_type, ada)
+  
 ```
-
