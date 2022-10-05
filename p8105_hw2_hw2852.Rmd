@@ -156,7 +156,10 @@ Next, we will read and clean the `snp.cvs` file.
 snp_closing_value = 
   read.csv("./snp.csv") %>% 
   janitor::clean_names(.) %>%
-  mutate(date = as.Date(date, "%m/%d/%y")) %>% 
+  mutate(
+    date = as.Date(date, "%m/%d/%y"),
+    date = ifelse(date > "2015-07-01", format(date, "19%y-%m-%d"), format(date))
+  ) %>% 
   separate(col = date, into = c('year', 'month','day'), sep = '-') %>%
   mutate(month = recode(month,
                         '01' = "January",
@@ -183,9 +186,25 @@ unemployment =
     jan:dec,
     names_to = "month",
     values_to = "percent_unemployment") %>% 
-  mutate(year = as.character(year))
+  mutate(year = as.character(year),
+         month = recode(month,
+                        'jan' = "January",
+                        'feb' = "February",
+                        'mar' = "March",
+                        'apr' = "April",
+                        'may' = "May",
+                        'jun' = "June",
+                        'jul' = "July",
+                        'aug' = "August",
+                        'sep' = "September",
+                        'oct' = "October",
+                        'nov' = "November",
+                        'dec' = "December"))
 ```
 
 Finally, we can merge the `national_politicians` and `snp_closing_value` data frames created above, and merge the `unemployment` data frame to the result. 
-
+```{r}
+tidy_pol_snp = left_join(national_politicians, snp_closing_value, by = c("year","month"))
+tidy_pol_snp_unemp = left_join(tidy_pol_snp, unemployment, by = c("year", "month"))
+```
 
