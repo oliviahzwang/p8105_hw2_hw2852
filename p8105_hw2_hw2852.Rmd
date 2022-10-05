@@ -94,7 +94,7 @@ mr_trash_wheel =
   read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, sheet = 1, skip = 1) %>%
   janitor::clean_names(.) %>% 
   select(-x15, -x16) %>% 
-  mutate(sports_balls = as.integer(sports_balls), trash_program = "mr_trash_wheel") %>% 
+  mutate(sports_balls = as.integer(sports_balls), trash_program = "mr trash wheel") %>% 
   filter(!is.na(dumpster))
 ```
 
@@ -103,7 +103,7 @@ Next, let us read and clean the Professor Trash Wheel Excel spreadsheet.
 professor_trash_wheel = 
   read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, sheet = 2, skip = 1) %>%
   janitor::clean_names(.) %>%
-  mutate(year = as.character(year), sports_balls = 0, trash_program = "professor_trash_wheel") %>% 
+  mutate(year = as.character(year), trash_program = "professor trash wheel") %>% 
   filter(!is.na(dumpster))
 ```
 
@@ -117,11 +117,43 @@ tidy_trash_wheel = bind_rows(mr_trash_wheel, professor_trash_wheel)
 nrow(tidy_trash_wheel)
 ```
 ```{r}
-sum(tidy_trash_wheel$weight_tons[tidy_trash_wheel$trash_program == "professor_trash_wheel"])
+sum(tidy_trash_wheel$weight_tons[tidy_trash_wheel$trash_program == "professor trash wheel"], na.rm = TRUE)
 ```
+
 ```{r}
-sum(tidy_trash_wheel$sports_balls[tidy_trash_wheel$trash_program == "mr_trash_wheel" & tidy_trash_wheel$year == "2020"])
+sum(tidy_trash_wheel$sports_balls[tidy_trash_wheel$trash_program == "mr trash wheel" & tidy_trash_wheel$year == "2020"], na.rm = TRUE)
 ```
 
+# Problem 3
 
+First, we will read and clean the `pols-month.csv` file. 
+```{r}
+national_politicians = 
+  read.csv("./pols-month.csv") %>% 
+  janitor::clean_names(.) %>% 
+  separate(col = mon, into = c('year', 'month','day'), sep = '-') %>%
+  mutate(month = recode(month,
+                        '01' = "January",
+                        '02' = "February",
+                        '03' = "March",
+                        '04' = "April",
+                        '05' = "May",
+                        '06' = "June",
+                        '07' = "July",
+                        '08' = "August",
+                        '09' = "September",
+                        '10' = "October",
+                        '11' = "November",
+                        '12' = "December"), 
+                president = ifelse(prez_gop == 1, "gop", "dem")) %>% 
+  select(-prez_gop, -prez_dem, -day)
+
+```
+
+**Note sometimes prez+gop is equal to 2?
+
+Next, we will read and clean the `snp.cvs` file. 
+```{r}
+
+```
 
