@@ -91,7 +91,7 @@ library(tidyverse)
 ```
 ```{r}
 mr_trash_wheel = 
-  read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, col_types = c("guess", "guess", "text", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess"), sheet = 1, skip = 1) %>%
+  read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, sheet = 1, skip = 1) %>%
   janitor::clean_names(.) %>% 
   select(-x15, -x16) %>% 
   mutate(sports_balls = as.integer(sports_balls), trash_program = "mr_trash_wheel") %>% 
@@ -101,9 +101,9 @@ mr_trash_wheel =
 Next, let us read and clean the Professor Trash Wheel Excel spreadsheet. 
 ```{r}
 professor_trash_wheel = 
-  read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, col_types = c("guess", "guess", "text", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess"), sheet = 2, skip = 1) %>%
+  read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, sheet = 2, skip = 1) %>%
   janitor::clean_names(.) %>%
-  mutate(sports_balls = 0, trash_program = "professor_trash_wheel") %>% 
+  mutate(year = as.character(year), sports_balls = 0, trash_program = "professor_trash_wheel") %>% 
   filter(!is.na(dumpster))
 ```
 
@@ -112,4 +112,16 @@ We proceed to combine the Mr. Trash Wheel and Professor Trash Wheel datasets usi
 ```{r}
 tidy_trash_wheel = bind_rows(mr_trash_wheel, professor_trash_wheel)
 ```
+
+```{r}
+nrow(tidy_trash_wheel)
+```
+```{r}
+sum(tidy_trash_wheel$weight_tons[tidy_trash_wheel$trash_program == "professor_trash_wheel"])
+```
+```{r}
+sum(tidy_trash_wheel$sports_balls[tidy_trash_wheel$trash_program == "mr_trash_wheel" & tidy_trash_wheel$year == "2020"])
+```
+
+
 
