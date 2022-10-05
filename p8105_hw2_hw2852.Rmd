@@ -175,3 +175,11 @@ snp_closing_value =
   select(-day)
 ```
 
+We will now read and clean the `unemployment.csv` file. 
+```{r}
+unemployment = 
+  read.csv("./unemployment.csv") %>% 
+  janitor::clean_names(.)
+```
+
+
