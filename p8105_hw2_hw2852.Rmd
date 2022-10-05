@@ -81,3 +81,35 @@ Based on the output generated from the code above, we can conclude that about __
 
 ### 1.2.4
 
+# Problem 2
+
+We will first read and clean the Mr. Trash Wheel Excel spreadsheet. 
+
+```{r load_libraries}
+library(readxl)
+library(tidyverse)
+```
+```{r}
+mr_trash_wheel = 
+  read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, col_types = c("guess", "guess", "text", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess"), sheet = 1, skip = 1) %>%
+  janitor::clean_names(.) %>% 
+  select(-x15, -x16) %>% 
+  mutate(sports_balls = as.integer(sports_balls), trash_program = "mr_trash_wheel") %>% 
+  filter(!is.na(dumpster))
+```
+
+Next, let us read and clean the Professor Trash Wheel Excel spreadsheet. 
+```{r}
+professor_trash_wheel = 
+  read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, col_types = c("guess", "guess", "text", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess", "guess"), sheet = 2, skip = 1) %>%
+  janitor::clean_names(.) %>%
+  mutate(sports_balls = 0, trash_program = "professor_trash_wheel") %>% 
+  filter(!is.na(dumpster))
+```
+
+We proceed to combine the Mr. Trash Wheel and Professor Trash Wheel datasets using `bind_rows`.
+
+```{r}
+tidy_trash_wheel = bind_rows(mr_trash_wheel, professor_trash_wheel)
+```
+
