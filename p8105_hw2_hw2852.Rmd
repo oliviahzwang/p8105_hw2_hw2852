@@ -14,7 +14,7 @@ library(dplyr)
 library(readxl)
 ```
 
-## 1.1 Read, Clean, Select, Mutate Transit Data
+## 1.1 Transit Data: Read, Clean, Select, Mutate 
 
 We will begin by importing and cleaning the CSV file containing the NYC Transit data. This process involves data import, cleaning variable names, and retaining prescribed columns needed for further analysis. The `entry` variable in the data set will be converted from a character to logical vector, and `Route` columns 8 through 11 will be converted from a numeric to character variable to achieve consistency with Routes 1 through 7. 
 
@@ -101,6 +101,9 @@ There are __17__ unique ADA-compliant stations that serve the A train.
 
 # Problem 2
 
+## 2.1 Mr. Trash Wheel Data: Read, Clean, Select, Mutate 
+
+First, let us read and clean the Mr. Trash Wheel data set, contained within the Trash Wheel Collection Data Excel spreadsheet. This process involves data import using the `read_excel` function contained within the `readxl` library, cleaning variable names, exclusion rows with non-dumpster-specific data, and rounding of the `sports_balls` variable to the nearest whole number. An additional variable `trash_program` was created and added to the data frame in preparation for merging in further steps of Problem 2. 
 
 ```{r}
 mr_trash_wheel = 
@@ -110,8 +113,10 @@ mr_trash_wheel =
   mutate(sports_balls = as.integer(sports_balls), trash_program = "mr trash wheel") %>% 
   filter(!is.na(dumpster))
 ```
+## 2.2 Professor Trash Wheel Data: Read, Clean, Mutate, Filter
 
-Next, let us read and clean the Professor Trash Wheel Excel spreadsheet. 
+Using a similar approach applied in part 2.1, we will read and clean the Professor Trash Wheel data, which is also contained within the Trash Wheel Collection Data Excel spreadsheet. The same `trash_program` variable was created and added to the data frame in preparation for merging in further steps of Problem 2. 
+
 ```{r}
 professor_trash_wheel = 
   read_excel("Trash Wheel Collection Data.xlsx", col_names = TRUE, sheet = 2, skip = 1) %>%
@@ -120,24 +125,45 @@ professor_trash_wheel =
   filter(!is.na(dumpster))
 ```
 
-We proceed to combine the Mr. Trash Wheel and Professor Trash Wheel datasets using `bind_rows`.
+## 2.3 Joining Mr. & Professor Trash Wheel Data
+
+We proceed to combine the Mr. Trash Wheel and Professor Trash Wheel data using the `bind_rows` function.
 
 ```{r}
 tidy_trash_wheel = bind_rows(mr_trash_wheel, professor_trash_wheel)
 ```
 
-```{r}
-nrow(tidy_trash_wheel)
-```
+## 2.4 Analysis of Joint Trash Wheel Data
+
+*
+*
+*
+*
+*
+*
+*
+
+### Total Weight of Trash & Sports Balls Collected
+
+We can determine the total weight of trash collected by Professor Trash Wheel by using the `sum` function, and specifying for the function be applied to the `weight_tons` variable for entries corresponding to the Professor Trash Wheel program. 
+
 ```{r}
 sum(tidy_trash_wheel$weight_tons[tidy_trash_wheel$trash_program == "professor trash wheel"], na.rm = TRUE)
 ```
+
+The total weight of trash collection by Professor Trash Wheel is __190.12 tonnes__. 
+
+Using a similar approach, we can determine the total number of sports balls collected by Mr. Trash Wheel in 2020, by applying the `sum` function with specific conditions. 
 
 ```{r}
 sum(tidy_trash_wheel$sports_balls[tidy_trash_wheel$trash_program == "mr trash wheel" & tidy_trash_wheel$year == "2020"], na.rm = TRUE)
 ```
 
+Mr. Trash Wheel collected a total of __856 sports balls__ in 2020. 
+
 # Problem 3
+
+## 3.1 National Politicians Data: Read, Clean, Select, Mutate
 
 First, we will read and clean the `pols-month.csv` file. 
 ```{r}
@@ -164,6 +190,8 @@ national_politicians =
 
 **Note sometimes prez+gop is equal to 2?
 
+## 3.2 SNP Closing Values Data: Read, Clean, Select, Mutate
+
 Next, we will read and clean the `snp.cvs` file. 
 ```{r}
 snp_closing_value = 
@@ -189,6 +217,8 @@ snp_closing_value =
                         '12' = "December")) %>%  
   select(-day)
 ```
+
+## 3.3 Unemployment Data: Read, Clean, Select, Mutate
 
 We will now read and clean the `unemployment.csv` file. 
 ```{r}
