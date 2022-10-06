@@ -135,13 +135,7 @@ tidy_trash_wheel = bind_rows(mr_trash_wheel, professor_trash_wheel)
 
 ## 2.4 Analysis of Joint Trash Wheel Data
 
-*
-*
-*
-*
-*
-*
-*
+The `tidy_trash_wheel` data set contained __`r nrow(tidy_trash_wheel)` rows__ (i.e., entries) and __`r ncol(tidy_trash_wheel)` columns__ (i.e., variables). This data set contained information regarding amounts of different types of trash collected by the Mr. Trash Wheel and Professor Trash Wheel programs on a given date, including total weight in tonnes and volume in cubic yards, number of plastic bottles, polystyrene, cigarette butts, glass bottles, grocery bags, chip bags and sports balls. Collection data in this data set corresponded to years ranging from __2014 to 2022__. 
 
 ### Total Weight of Trash & Sports Balls Collected
 
@@ -260,11 +254,11 @@ tidy_pol_snp_unemp = left_join(tidy_pol_snp, unemployment, by = c("year", "month
 
 ## 3.5 Analysis of Joint Politician, SNP, Unemployment Data
 
-The first set of data imported in part 3.1, `national_politicians`, contained __`r nrow(national_politicians)` rows__ (i.e., entries) and __`r ncol(national_politicians)` columns__ (i.e., variables), not including `year` and `month`. This data set contained the numbers of democratic and republican governors (`gov_gop`, `gov_dem`), senators (`sen_gop`, `sen_dem`), and representatives (`rep_gop`, `rep_dem`) on a given date, as well as the political party of the president on a given date (`president`). The years in this data set ranged from __1947 to 2015__. 
+The first set of data imported and cleaned in part 3.1, `national_politicians`, contained __`r nrow(national_politicians)` rows__ (i.e., entries) and __`r ncol(national_politicians)` columns__ (i.e., variables), not including `year` and `month`. This data set contained the numbers of democratic and republican governors (`gov_gop`, `gov_dem`), senators (`sen_gop`, `sen_dem`), and representatives (`rep_gop`, `rep_dem`) on a given date, as well as the political party of the president on a given date (`president`). The years in this data set ranged from __1947 to 2015__. 
 
-The second set of data imported in part 3.2, `snp_closing_value`, contained __`r nrow(snp_closing_value)` rows__ (i.e., entries) and __`r ncol(snp_closing_value)` columns__ (i.e., variables), not including `year` and `month`. This data set contained the  closing values (`close`) of the S&P stock index on a given date. The years in this data set ranged from __1950 to 2015__.
+The second set of data imported and cleaned in part 3.2, `snp_closing_value`, contained __`r nrow(snp_closing_value)` rows__ (i.e., entries) and __`r ncol(snp_closing_value)` columns__ (i.e., variables), not including `year` and `month`. This data set contained the  closing values (`close`) of the S&P stock index on a given date. The years in this data set ranged from __1950 to 2015__.
 
-The third set of data imported in part 3.3, `unemployment`, contained __`r nrow(unemployment)` rows__ (i.e., entries) and __`r ncol(unemployment)` columns__ (i.e., variables), not including `year` and `month`. This data set contains the unemployment rate (`percent_unemployment`) reported in percentages in a given month of a given year. The years in this data set also ranged from __1950 to 2015__. 
+The third set of data imported and cleaned in part 3.3, `unemployment`, contained __`r nrow(unemployment)` rows__ (i.e., entries) and __`r ncol(unemployment)` columns__ (i.e., variables), not including `year` and `month`. This data set contains the unemployment rate (`percent_unemployment`) reported in percentages in a given month of a given year. The years in this data set ranged from __1948 to 2015__. 
 
 We can apply the `skimr` function, contained within the `skimr` library to generate a summary of the merged `tidy_pol_snp_unemp` data set. 
 
@@ -272,5 +266,4 @@ We can apply the `skimr` function, contained within the `skimr` library to gener
 skimr::skim(tidy_pol_snp_unemp)
 ```
 
-
-This difference in year range compared to `national_politicians` data set explains the missing values of variable `close` in the final merged `tidy_pol_snp_unemp` data set. 
+The resulting data set created in part 3.4, `tidy_pol_snp_unemp`, contained __`r nrow(tidy_pol_snp_unemp)` rows__ (i.e., entries) and __`r ncol(tidy_pol_snp_unemp)` columns__ (i.e., variables). The years in this data set contained the widest range from __1947 to 2015__. The difference noted in year range between the final merged data set and the  `snp_closing_value` and `unemployment` data sets explain the _36_ missing values of variable `close` and _12_ missing values of `percent_unemployment` in the final merged `tidy_pol_snp_unemp` data set. 
